@@ -11,10 +11,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.turhanoz.reactivedirectorychooser.event.OnDirectoryCancelEvent;
-import com.turhanoz.reactivedirectorychooser.event.OnDirectoryChosenEvent;
-import com.turhanoz.reactivedirectorychooser.ui.DirectoryChooserFragment;
-import com.turhanoz.reactivedirectorychooser.ui.OnDirectoryChooserFragmentInteraction;
+import com.turhanoz.android.reactivedirectorychooser.event.OnDirectoryCancelEvent;
+import com.turhanoz.android.reactivedirectorychooser.event.OnDirectoryChosenEvent;
+import com.turhanoz.android.reactivedirectorychooser.ui.DirectoryChooserFragment;
+import com.turhanoz.android.reactivedirectorychooser.ui.OnDirectoryChooserFragmentInteraction;
 
 import java.io.File;
 
