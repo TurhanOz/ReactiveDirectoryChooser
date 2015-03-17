@@ -1,4 +1,5 @@
 # Android ReactiveDirectoryChooser
+[![Build Status](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser.svg?branch=master)](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser)
 
 A simple android library that lets user select a directory.
 
