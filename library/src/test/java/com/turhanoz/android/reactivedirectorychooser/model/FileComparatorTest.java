@@ -3,6 +3,7 @@ package com.turhanoz.android.reactivedirectorychooser.model;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
+@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
 public class FileComparatorTest{
 
     @Test

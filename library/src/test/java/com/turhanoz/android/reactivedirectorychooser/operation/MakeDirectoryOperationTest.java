@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 
@@ -16,6 +17,7 @@ import static org.junit.Assert.assertNotSame;
 import static org.mockito.Mockito.mock;
 
 @RunWith(RobolectricTestRunner.class)
+@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
 public class MakeDirectoryOperationTest {
     MakeDirectoryOperation sut;
     DirectoryTree directoryTree;
