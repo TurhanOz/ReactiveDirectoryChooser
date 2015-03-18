@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">ReactiveDirectoryChooser</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="directory_name">Create new directory</string>
     <string name="directory_name_instruction">Please enter the name of the new Directory you want to create : </string>
     <string name="operation_not_allowed">Operation not allowed.</string>
+    <string name="select">Select</string>
 </resources>
