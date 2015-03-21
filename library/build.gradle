@@ -1,5 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.robolectric'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = "com.turhanoz.android"
+archivesBaseName = "reactivedirectorychooser"
+version = "0.0.1"
 
 android {
     compileSdkVersion 21
@@ -42,6 +48,61 @@ robolectric {
     // use afterTest to listen to the test execution results
     afterTest { descriptor, result ->
         println "Executing test for ${descriptor.name} with result: ${result.resultType}"
+    }
+}
+
+configurations {
+    archives {
+        extendsFrom configurations.default
+    }
+}
+
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Android Reactive Directory Chooser'
+                packaging 'aar'
+                description 'A simple android library that lets user select a directory from Storage.'
+                url 'https://github.com/TurhanOz/ReactiveDirectoryChooser'
+
+                scm {
+                    connection 'scm:git@github.com:TurhanOz/ReactiveDirectoryChooser.git'
+                    developerConnection 'scm:git@github.com:TurhanOz/ReactiveDirectoryChooser.git'
+                    url 'https://github.com/TurhanOz/ReactiveDirectoryChooser'
+                }
+
+                licenses {
+                    license {
+                        name 'THE VIRGIN-MOJITO-WARE LICENSE version 2048'
+                        url 'https://github.com/TurhanOz/ReactiveDirectoryChooser/blob/master/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'TurhanOz'
+                        name 'Turhan Oz'
+                        email '@turhanoz'
+                    }
+                }
+            }
+        }
     }
 }
 
