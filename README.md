@@ -51,7 +51,6 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
         setContentView(R.layout.main);
     }
 
-
     void addDirectoryChooserFragment() {
         DialogFragment directoryChooserFragment = DirectoryChooserFragment.newInstance(currentRootDirectory);
         getSupportFragmentManager().beginTransaction().addToBackStack("RDC").add(R.id.fragment_host, directoryChooserFragment, "RDC").commit();

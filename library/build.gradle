@@ -5,17 +5,17 @@ apply plugin: 'signing'
 
 group = "com.turhanoz.android"
 archivesBaseName = "reactivedirectorychooser"
-version = "0.0.6"
+version = "0.0.7"
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 10
-        targetSdkVersion 21
-        versionCode 6
-        versionName "0.0.6"
+        targetSdkVersion 22
+        versionCode 7
+        versionName "0.0.7"
     }
     buildTypes {
         release {
@@ -111,9 +111,9 @@ uploadArchives {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.0.3'
-    compile 'com.android.support:cardview-v7:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
+    compile 'com.android.support:cardview-v7:22.0.0'
     compile 'com.netflix.rxjava:rxjava-android:0.20.7'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.github.shell-software:fab:1.0.5@aar'

@@ -19,18 +19,18 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
     final EventBus bus;
     private DirectoryList dataSet;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
 
         public ViewHolder(View root) {
             super(root);
-            textView = (TextView)root.findViewById(R.id.text1);
+            textView = (TextView) root.findViewById(R.id.text1);
             textView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            bus.post(new UpdateDirectoryTreeEvent(dataSet.get(getPosition())));
+            bus.post(new UpdateDirectoryTreeEvent(dataSet.get(getAdapterPosition())));
         }
     }
 
