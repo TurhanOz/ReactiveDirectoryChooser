@@ -15,7 +15,7 @@ Library releases are available on Maven Central; you can add dependencies as fol
 **Gradle**
 
 ```groovy
-compile 'com.turhanoz.android:reactivedirectorychooser:0.0.1@aar'
+compile 'com.turhanoz.android:reactivedirectorychooser:0.0.4@aar'
 ```
 **Maven**
 
@@ -23,7 +23,7 @@ compile 'com.turhanoz.android:reactivedirectorychooser:0.0.1@aar'
 <dependency>
   <groupId>com.turhanoz.android</groupId>
   <artifactId>reactivedirectorychooser</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.4</version>
   <type>aar</type>
 </dependency>
 ```

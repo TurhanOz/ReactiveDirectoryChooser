@@ -30,6 +30,7 @@ public class DirectoryControllerTest {
     DirectoryController sut;
     EventBus mockBus;
 
+
     @Before
     public void setUp() throws Exception {
         mockBus = mock(EventBus.class);
