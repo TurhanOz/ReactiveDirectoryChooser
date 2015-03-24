@@ -49,8 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="24dp"
         fab:image="@drawable/fab_plus_icon" />
 
 </RelativeLayout>
