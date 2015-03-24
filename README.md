@@ -1,6 +1,6 @@
 # Android ReactiveDirectoryChooser
 [![Build Status](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser.svg?branch=master)](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser)
-
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.turhanoz/reactivedirectorychooser.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.turhanoz.android%22%20AND%20a%3A%22reactivedirectorychooser%22)
 A simple android library that lets user select a directory.
 
 This library has been developed using RxJava. It also integrates relevant unit tests.
