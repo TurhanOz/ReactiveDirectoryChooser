@@ -46,7 +46,7 @@ public class DirectoryAdapterTest {
         when(viewHolder.getPosition()).thenReturn(0);
         dataSet.directoryList.add(expectedClickedFile);
 
-        viewHolder.fileClicked(mock(View.class));
+        viewHolder.onClick(mock(View.class));
 
         verify(mockBus).post(eq(new UpdateDirectoryTreeEvent(expectedClickedFile)));
     }
