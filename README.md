@@ -1,6 +1,6 @@
 # Android ReactiveDirectoryChooser
 [![Build Status](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser.svg?branch=master)](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser)
-[![Maven Central](https://img.shields.io/badge/maven--central-0.0.4-blue.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.turhanoz.android%22%20AND%20a%3A%22reactivedirectorychooser%22)
+[![Maven Central](https://img.shields.io/badge/maven--central-0.0.5-blue.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.turhanoz.android%22%20AND%20a%3A%22reactivedirectorychooser%22)
 
 A simple android library that lets user select a directory.
 
@@ -15,7 +15,7 @@ Library releases are available on Maven Central; you can add dependencies as fol
 **Gradle**
 
 ```groovy
-compile 'com.turhanoz.android:reactivedirectorychooser:0.0.4@aar'
+compile 'com.turhanoz.android:reactivedirectorychooser:0.0.5@aar'
 ```
 **Maven**
 
@@ -23,7 +23,7 @@ compile 'com.turhanoz.android:reactivedirectorychooser:0.0.4@aar'
 <dependency>
   <groupId>com.turhanoz.android</groupId>
   <artifactId>reactivedirectorychooser</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
   <type>aar</type>
 </dependency>
 ```
