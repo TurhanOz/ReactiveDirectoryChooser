@@ -51,6 +51,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="24dp"
         android:layout_marginRight="24dp"
-        fab:image="@drawable/fab_plus_icon" />
+        fab:image="@mipmap/fab_plus_icon" />
 
 </RelativeLayout>
