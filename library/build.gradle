@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 group = "com.turhanoz.android"
 archivesBaseName = "reactivedirectorychooser"
-version = "0.0.2"
+version = "0.0.3"
 
 android {
     compileSdkVersion 21
@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 21
-        versionCode 2
-        versionName "0.0.2"
+        versionCode 3
+        versionName "0.0.3"
     }
     buildTypes {
         release {
@@ -117,7 +117,7 @@ dependencies {
     compile 'com.netflix.rxjava:rxjava-android:0.20.7'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.github.shell-software:fab:1.0.5'
+    compile 'com.github.shell-software:fab:1.0.5@aar'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:2.4'
     testCompile "org.mockito:mockito-core:1.9.5"
