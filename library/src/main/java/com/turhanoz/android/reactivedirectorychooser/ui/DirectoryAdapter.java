@@ -9,28 +9,27 @@ import android.widget.TextView;
 
 import com.turhanoz.android.reactivedirectorychooser.event.UpdateDirectoryTreeEvent;
 import com.turhanoz.android.reactivedirectorychooser.model.DirectoryList;
+import com.turhanoz.reactivedirectorychooser.R;
 
 import java.io.File;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.ViewHolder> {
     final EventBus bus;
     private DirectoryList dataSet;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(android.R.id.text1) TextView textView;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView textView;
 
         public ViewHolder(View root) {
             super(root);
-            ButterKnife.inject(this, root);
+            textView = (TextView)root.findViewById(R.id.text1);
+            textView.setOnClickListener(this);
         }
 
-        @OnClick(android.R.id.text1)
-        public void fileClicked(View view) {
+        @Override
+        public void onClick(View v) {
             bus.post(new UpdateDirectoryTreeEvent(dataSet.get(getPosition())));
         }
     }
@@ -44,7 +43,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
     public DirectoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                           int viewType) {
         View root = LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.simple_selectable_list_item, parent, false);
+                .inflate(R.layout.item, parent, false);
         ViewHolder viewHolder = new ViewHolder(root);
         return viewHolder;
     }
