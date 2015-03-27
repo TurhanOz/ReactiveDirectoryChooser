@@ -84,6 +84,11 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
 }
 
 ```
+
+
+## Article
+Follow the detailed process of this open source project in this [blog post](http://turhanoz.com/reactive-directory-chooser-an-open-source-journey/)
+
 ## License
 
 ```text
