@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 group = "com.turhanoz.android"
 archivesBaseName = "reactivedirectorychooser"
-version = "0.0.9"
+version = "0.0.10"
 
 android {
     compileSdkVersion 22
@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 9
-        versionName "0.0.9"
+        versionCode 10
+        versionName "0.0.10"
     }
     buildTypes {
         release {
