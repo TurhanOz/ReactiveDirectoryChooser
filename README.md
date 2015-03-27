@@ -30,6 +30,15 @@ compile ('com.turhanoz.android:reactivedirectorychooser:0.0.10@aar'){
 </dependency>
 ```
 
+### Supported Android SDK
+
+You can use this library for apps starting from android 2.3.3 (gingerbread /API 10) to android 5.1 (lollipop / API 22)
+
+```
+minSdkVersion 10
+targetSdkVersion 22
+```
+
 ### Manifest
 
 You need to add the `android.permission.WRITE_EXTERNAL_STORAGE` permission.
