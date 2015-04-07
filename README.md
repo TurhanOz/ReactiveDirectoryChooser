@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/TurhanOz/ReactiveDirectoryChooser.png?label=ready&title=Ready)](https://waffle.io/TurhanOz/ReactiveDirectoryChooser)
 # Android ReactiveDirectoryChooser
 [![Build Status](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser.svg?branch=master)](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser)
 [![Maven Central](https://img.shields.io/badge/maven--central-0.0.10-blue.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.turhanoz.android%22%20AND%20a%3A%22reactivedirectorychooser%22)
