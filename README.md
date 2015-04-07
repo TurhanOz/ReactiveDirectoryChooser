@@ -8,6 +8,13 @@ A simple android library that lets user select a directory.
 
 This library has been developed using RxJava. It also integrates relevant unit tests.
 
+<table>
+<tr>
+<th>Usual Fragment<br><img src="media/RDC-FullFragment.png" width="38%"></th>
+<th>Floating DialogFragment<br><img src="media/RDC-FloatingFragment.png" width="38%"></th>
+</tr>
+</table>
+
 ## Usage
 
 ### From Maven Central
@@ -67,10 +74,10 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
     void addDirectoryChooserFragment() {
         DialogFragment directoryChooserFragment = DirectoryChooserFragment.newInstance(currentRootDirectory);
         getSupportFragmentManager()
-		.beginTransaction()
-		.addToBackStack("RDC")
-		.add(R.id.fragment_host, directoryChooserFragment, "RDC")
-		.commit();
+			.beginTransaction()
+			.addToBackStack("RDC")
+			.add(R.id.fragment_host, directoryChooserFragment, "RDC")
+			.commit();
     }
 
     void addDirectoryChooserAsFloatingFragment() {
