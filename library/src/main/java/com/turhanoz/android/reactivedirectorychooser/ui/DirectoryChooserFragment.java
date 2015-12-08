@@ -4,6 +4,7 @@ package com.turhanoz.android.reactivedirectorychooser.ui;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +15,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.software.shell.fab.ActionButton;
 import com.turhanoz.android.reactivedirectorychooser.controller.DirectoryController;
 import com.turhanoz.android.reactivedirectorychooser.event.CurrentRootDirectoryChangedEvent;
 import com.turhanoz.android.reactivedirectorychooser.event.OnDirectoryCancelEvent;
@@ -31,7 +31,7 @@ import de.greenrobot.event.EventBus;
 public class DirectoryChooserFragment extends DialogFragment implements View.OnClickListener{
     RecyclerView recyclerView;
     TextView cardView;
-    ActionButton floatingActionButton;
+    FloatingActionButton floatingActionButton;
     Button selectDirectoryButton;
 
     EventBus bus;
@@ -107,7 +107,7 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
         //Can not use ButterKnife on library project !
         recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view1);
         cardView = (TextView) rootView.findViewById(R.id.info_text);
-        floatingActionButton = (ActionButton) rootView.findViewById(R.id.action_button);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.action_button);
         selectDirectoryButton = (Button) rootView.findViewById(R.id.select_button);
 
         floatingActionButton.setOnClickListener(this);

@@ -19,7 +19,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="@string/select" />
+                    android:background="?attr/colorAccent"
+                    android:text="@string/select"
+                    />
 
                 <TextView
                     android:id="@+id/info_text"
@@ -42,15 +44,17 @@
         android:layout_below="@id/card_view"
         android:scrollbars="vertical" />
 
-    <com.software.shell.fab.ActionButton
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="24dp"
         android:layout_marginRight="24dp"
-        fab:image="@drawable/fab_plus_icon" />
+        android:src="@drawable/fab_plus_icon" />
+
 
 </RelativeLayout>
