@@ -1,5 +1,7 @@
 package com.turhanoz.android.reactivedirectorychooser.observable;
 
+import com.turhanoz.reactivedirectorychooser.BuildConfig;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(constants = BuildConfig.class, sdk=21, manifest = "library/src/main/AndroidManifest.xml")
 public class ListDirectoryObservableTest {
     ListDirectoryObservable sut;
     Observer mockObserver;

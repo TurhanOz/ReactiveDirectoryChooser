@@ -4,6 +4,7 @@ import com.turhanoz.android.reactivedirectorychooser.event.DataSetChangedEvent;
 import com.turhanoz.android.reactivedirectorychooser.event.OperationFailedEvent;
 import com.turhanoz.android.reactivedirectorychooser.model.DirectoryList;
 import com.turhanoz.android.reactivedirectorychooser.model.DirectoryTree;
+import com.turhanoz.reactivedirectorychooser.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(constants = BuildConfig.class, sdk=21, manifest = "library/src/main/AndroidManifest.xml")
 public class ListDirectoryObserverTest {
     ListDirectoryObserver sut;
     EventBus mockBus;

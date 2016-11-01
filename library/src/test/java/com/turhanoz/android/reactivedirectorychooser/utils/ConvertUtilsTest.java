@@ -2,21 +2,23 @@ package com.turhanoz.android.reactivedirectorychooser.utils;
 
 import android.util.DisplayMetrics;
 
+import com.turhanoz.reactivedirectorychooser.BuildConfig;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(constants = BuildConfig.class, sdk=21, manifest = "library/src/main/AndroidManifest.xml")
 public class ConvertUtilsTest {
     @Test
     public void shouldConvertDpToPixel() throws Exception {
         int dp = 20;
-        DisplayMetrics displayMetrics = Robolectric.getShadowApplication().getResources().getDisplayMetrics();
+        DisplayMetrics displayMetrics = ShadowApplication.getInstance().getApplicationContext().getResources().getDisplayMetrics();
 
         displayMetrics.densityDpi = DisplayMetrics.DENSITY_MEDIUM;
         shouldConvertDpToPixel(dp, 20);
@@ -30,7 +32,7 @@ public class ConvertUtilsTest {
 
 
     private void shouldConvertDpToPixel(int dp, int expectedPx) throws Exception {
-        int px = ConvertUtils.convertDpToPixel(Robolectric.getShadowApplication().getApplicationContext(), dp);
+        int px = ConvertUtils.convertDpToPixel(ShadowApplication.getInstance().getApplicationContext(), dp);
         assertEquals(expectedPx, px);
     }
 

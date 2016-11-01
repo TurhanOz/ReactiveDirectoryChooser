@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(manifest = "library/src/main/AndroidManifest.xml")
 public class DirectoryAdapterTest {
     DirectoryAdapter sut;
     DirectoryTree dataSet;
@@ -44,7 +44,7 @@ public class DirectoryAdapterTest {
     @Test
     public void onFileClickedShouldUpdateDirectoryTree() throws Exception {
         File expectedClickedFile = mock(File.class);
-        ViewGroup fakeViewGroup = new RelativeLayout(Robolectric.getShadowApplication().getApplicationContext());
+        ViewGroup fakeViewGroup = new RelativeLayout(ShadowApplication.getInstance().getApplicationContext());
         DirectoryAdapter.ViewHolder viewHolder = spy(sut.onCreateViewHolder(fakeViewGroup, 0));
         when(viewHolder.getAdapterPosition()).thenReturn(0);
         dataSet.directoryList.add(expectedClickedFile);
