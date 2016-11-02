@@ -1,11 +1,15 @@
 language: android
 android:
   components:
-    # - platform-tools
-    # - tools
+    - tools
+    - platform-tools
     - build-tools-24.0.3
     - android-24
-    - extra-android-support
     - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-android-support
+    - extra-google-google_play_services
 jdk:
   - oraclejdk8
+script:
+  - ./gradlew test
