@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,11 +29,12 @@ import java.io.File;
 
 import de.greenrobot.event.EventBus;
 
-public class DirectoryChooserFragment extends DialogFragment implements View.OnClickListener{
+public class DirectoryChooserFragment extends DialogFragment implements View.OnClickListener, TabLayout.OnTabSelectedListener{
     RecyclerView recyclerView;
     TextView cardView;
     FloatingActionButton floatingActionButton;
     Button selectDirectoryButton;
+    TabLayout tabs;
 
     EventBus bus;
     DirectoryController directoryController;
@@ -110,7 +112,7 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
         currentRootDirectory = event.getCurrentDirectory();
         cardView.setText(event.getCurrentDirectory().toString());
     }
-    
+
     private void setCurrentRootDirectory(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             currentRootDirectory = (File) savedInstanceState.getSerializable("currentRootDirectory");
@@ -137,6 +139,11 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
 
         floatingActionButton.setOnClickListener(this);
         selectDirectoryButton.setOnClickListener(this);
+
+        tabs = (TabLayout) rootView.findViewById(R.id.tabs);
+        tabs.addTab(tabs.newTab().setText("primary"));
+        tabs.addTab(tabs.newTab().setText("secondary"));
+        tabs.addOnTabSelectedListener(this);
     }
 
     private void initBus() {
@@ -160,5 +167,25 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
     private void selectDirectoryButtonClicked(View view) {
         bus.post(new OnDirectoryChosenEvent(currentRootDirectory));
         dismiss();
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        if(tab.getPosition() == 0){
+            Log.d("TAG", "primary");
+        }
+        else{
+            Log.d("TAG", "secondary");
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }
