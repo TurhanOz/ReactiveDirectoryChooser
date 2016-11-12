@@ -56,6 +56,24 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_directory_chooser, container, false);
+        initGui(rootView);
+        initBus();
+        intController();
+        updateDirectoryTree();
+
+        return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("currentRootDirectory", currentRootDirectory);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         BusUtils.register(bus, getActivity());
@@ -67,6 +85,32 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
         super.onDestroy();
     }
 
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        bus.post(new OnDirectoryCancelEvent());
+        super.onCancel(dialog);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == floatingActionButton){
+            floatingActionButtonClicked(v);
+        }
+        else if(v == selectDirectoryButton){
+            selectDirectoryButtonClicked(v);
+        }
+    }
+
+    public void onEvent(OperationFailedEvent event) {
+        Log.d("TAG", getString(R.string.operation_not_allowed));
+        Toast.makeText(getActivity(), getString(R.string.operation_not_allowed), Toast.LENGTH_SHORT).show();
+    }
+
+    public void onEvent(CurrentRootDirectoryChangedEvent event) {
+        currentRootDirectory = event.getCurrentDirectory();
+        cardView.setText(event.getCurrentDirectory().toString());
+    }
+    
     private void setCurrentRootDirectory(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             currentRootDirectory = (File) savedInstanceState.getSerializable("currentRootDirectory");
@@ -78,29 +122,10 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
     private void setCurrentDirectoryFromArgumentsOrDefault() {
         File rootDirectoryFromArgument = (File) getArguments().getSerializable("rootDirectory");
         if (rootDirectoryFromArgument == null) {
-
             currentRootDirectory = Environment.getExternalStorageDirectory();
         } else {
             currentRootDirectory = rootDirectoryFromArgument;
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("currentRootDirectory", currentRootDirectory);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_directory_chooser, container, false);
-        initGui(rootView);
-        initBus();
-        intController();
-        updateDirectoryTree();
-
-        return rootView;
     }
 
     private void initGui(View rootView) {
@@ -126,32 +151,6 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
 
     private void updateDirectoryTree() {
         directoryController.onEvent(new UpdateDirectoryTreeEvent(currentRootDirectory));
-    }
-
-    public void onEvent(OperationFailedEvent event) {
-        Log.d("TAG", getString(R.string.operation_not_allowed));
-        Toast.makeText(getActivity(), getString(R.string.operation_not_allowed), Toast.LENGTH_SHORT).show();
-    }
-
-    public void onEvent(CurrentRootDirectoryChangedEvent event) {
-        currentRootDirectory = event.getCurrentDirectory();
-        cardView.setText(event.getCurrentDirectory().toString());
-    }
-
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        bus.post(new OnDirectoryCancelEvent());
-        super.onCancel(dialog);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v == floatingActionButton){
-            floatingActionButtonClicked(v);
-        }
-        else if(v == selectDirectoryButton){
-            selectDirectoryButtonClicked(v);
-        }
     }
 
     private void floatingActionButtonClicked(View view) {
