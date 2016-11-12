@@ -2,7 +2,6 @@ package com.turhanoz.android.reactivedirectorychoosersample;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -60,8 +59,6 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
     private void initCurrentRootDirectory(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             currentRootDirectory = (File) savedInstanceState.getSerializable("currentRootDirectory");
-        } else {
-            currentRootDirectory = Environment.getExternalStorageDirectory();
         }
     }
 
@@ -82,7 +79,7 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
     }
 
     private void updateInfoText() {
-        infoText.setText(currentRootDirectory.getAbsolutePath());
+        infoText.setText(currentRootDirectory == null ? "no folder selected":currentRootDirectory.getAbsolutePath());
     }
 
     @Override
