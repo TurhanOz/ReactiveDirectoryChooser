@@ -78,7 +78,7 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
         tabs.setVisibility(GONE);
         if (externalStorageController.hasMultipleExternalStorages()) {
             tabs.setVisibility(View.VISIBLE);
-            if (currentRootDirectory.getAbsolutePath().toLowerCase().contains(externalStorageController.getExternalPrimaryStoragePath()))
+            if (externalStorageController.isFileInPrimaryFileSystem(currentRootDirectory))
                 tabs.getTabAt(0).select();
             else
                 tabs.getTabAt(1).select();
@@ -189,13 +189,13 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
     public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getPosition() == 0) {
             Log.d("TAG", "primary");
-            if (!currentRootDirectory.getAbsolutePath().toLowerCase().contains(externalStorageController.getExternalPrimaryStoragePath())) {
+            if (!externalStorageController.isFileInPrimaryFileSystem(currentRootDirectory)) {
                 currentRootDirectory = externalStorageController.getPrimaryFileSystem();
                 updateDirectoryTree();
             }
         } else {
             Log.d("TAG", "secondary");
-            if (!currentRootDirectory.getAbsolutePath().toLowerCase().contains(externalStorageController.getExternalSecondaryStoragePath())) {
+            if (!externalStorageController.isFileInSecondaryFileSystem(currentRootDirectory)) {
                 currentRootDirectory = externalStorageController.getSecondaryFileSystem();
                 updateDirectoryTree();
             }

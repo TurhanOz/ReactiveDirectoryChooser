@@ -4,9 +4,10 @@ import java.io.File;
 
 public class ExternalStorageController {
 
-    public boolean hasMultipleExternalStorages(){
+    public boolean hasMultipleExternalStorages() {
         return hasExternalPrimaryStorage() && hasExternalSecondaryStorage();
     }
+
     public boolean hasExternalPrimaryStorage() {
         return getExternalPrimaryStoragePath() != null;
     }
@@ -29,5 +30,23 @@ public class ExternalStorageController {
 
     public File getSecondaryFileSystem() {
         return new File(getExternalSecondaryStoragePath());
+    }
+
+    public boolean isFileInPrimaryFileSystem(File file) {
+        return isFileInFileSystem(file, hasExternalPrimaryStorage(), getExternalPrimaryStoragePath());
+    }
+
+    public boolean isFileInSecondaryFileSystem(File file) {
+        return isFileInFileSystem(file, hasExternalSecondaryStorage(), getExternalSecondaryStoragePath());
+    }
+
+    private boolean isFileInFileSystem(File file, boolean hasExternalStorage, String externalStoragePath){
+        if (file == null)
+            return false;
+        if (!hasExternalStorage)
+            return false;
+
+        return file.getAbsolutePath().toLowerCase().contains(externalStoragePath);
+
     }
 }
