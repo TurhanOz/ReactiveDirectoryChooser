@@ -4,7 +4,7 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -26,12 +26,17 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class MainActivity extends ActionBarActivity implements OnDirectoryChooserFragmentInteraction, PermissionListener {
-    @InjectView(R.id.activity_ui_host)  LinearLayout activityUiHost;
-    @InjectView(R.id.button_rdc_floating) Button selectFloatingDirectoryChooserButton;
-    @InjectView(R.id.button_rdc) Button selectDirectoryChooserButton;
-    @InjectView(R.id.fragment_host) FrameLayout fragmentHost;
-    @InjectView(R.id.info_text) TextView infoText;
+public class MainActivity extends AppCompatActivity implements OnDirectoryChooserFragmentInteraction, PermissionListener {
+    @InjectView(R.id.activity_ui_host)
+    LinearLayout activityUiHost;
+    @InjectView(R.id.button_rdc_floating)
+    Button selectFloatingDirectoryChooserButton;
+    @InjectView(R.id.button_rdc)
+    Button selectDirectoryChooserButton;
+    @InjectView(R.id.fragment_host)
+    FrameLayout fragmentHost;
+    @InjectView(R.id.info_text)
+    TextView infoText;
 
     FragmentCounter fragmentCounter;
     File currentRootDirectory;
@@ -79,7 +84,7 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
     }
 
     private void updateInfoText() {
-        infoText.setText(currentRootDirectory == null ? "no folder selected":currentRootDirectory.getAbsolutePath());
+        infoText.setText(currentRootDirectory == null ? "no folder selected" : currentRootDirectory.getAbsolutePath());
     }
 
     @Override

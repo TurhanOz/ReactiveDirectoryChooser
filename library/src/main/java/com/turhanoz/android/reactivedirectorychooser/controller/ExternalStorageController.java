@@ -1,6 +1,7 @@
 package com.turhanoz.android.reactivedirectorychooser.controller;
 
 import java.io.File;
+import java.util.Locale;
 
 public class ExternalStorageController {
 
@@ -46,7 +47,7 @@ public class ExternalStorageController {
         if (!hasExternalStorage)
             return false;
 
-        return file.getAbsolutePath().toLowerCase().contains(externalStoragePath);
+        return file.getAbsolutePath().toLowerCase(Locale.getDefault()).contains(externalStoragePath);
 
     }
 }

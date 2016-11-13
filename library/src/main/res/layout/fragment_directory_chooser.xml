@@ -18,6 +18,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="?attr/colorAccent"
                     android:text="@string/select"
@@ -28,11 +29,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/select_button"
+                    android:layout_toStartOf="@id/select_button"
                     android:ellipsize="start"
                     android:gravity="center_vertical"
                     android:minHeight="75dp"
                     android:padding="10dp"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:textSize="18sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -56,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:src="@drawable/fab_plus_icon" />
 
