@@ -2,6 +2,7 @@ package com.turhanoz.android.reactivedirectorychooser.operation;
 
 import com.turhanoz.android.reactivedirectorychooser.model.CustomFile;
 import com.turhanoz.android.reactivedirectorychooser.model.DirectoryTree;
+import com.turhanoz.reactivedirectorychooser.BuildConfig;
 
 import org.hamcrest.core.Is;
 import org.junit.Before;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(constants = BuildConfig.class, sdk=21, manifest = "library/src/main/AndroidManifest.xml")
 public class ListDirectoryOperationTest {
     ListDirectoryOperation sut;
     DirectoryTree directoryTree;

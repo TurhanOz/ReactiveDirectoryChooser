@@ -3,8 +3,8 @@ package com.turhanoz.android.reactivedirectorychooser.ui;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.turhanoz.android.reactivedirectorychooser.controller.DirectoryController;
+import com.turhanoz.android.reactivedirectorychooser.controller.ExternalStorageController;
 import com.turhanoz.android.reactivedirectorychooser.event.CurrentRootDirectoryChangedEvent;
 import com.turhanoz.android.reactivedirectorychooser.event.OnDirectoryCancelEvent;
 import com.turhanoz.android.reactivedirectorychooser.event.OnDirectoryChosenEvent;
@@ -28,14 +29,18 @@ import java.io.File;
 
 import de.greenrobot.event.EventBus;
 
-public class DirectoryChooserFragment extends DialogFragment implements View.OnClickListener{
+import static android.view.View.GONE;
+
+public class DirectoryChooserFragment extends DialogFragment implements View.OnClickListener, TabLayout.OnTabSelectedListener {
     RecyclerView recyclerView;
     TextView cardView;
     FloatingActionButton floatingActionButton;
     Button selectDirectoryButton;
+    TabLayout tabs;
 
     EventBus bus;
     DirectoryController directoryController;
+    ExternalStorageController externalStorageController;
     File currentRootDirectory;
 
     public static DirectoryChooserFragment newInstance(File rootDirectory) {
@@ -51,8 +56,39 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        externalStorageController = new ExternalStorageController();
         setCurrentRootDirectory(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, 0);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_directory_chooser, container, false);
+        initGui(rootView);
+        initBus();
+        intController();
+        updateTabs();
+        updateDirectoryTree();
+
+        return rootView;
+    }
+
+    private void updateTabs() {
+        tabs.setVisibility(GONE);
+        if (externalStorageController.hasMultipleExternalStorages()) {
+            tabs.setVisibility(View.VISIBLE);
+            if (externalStorageController.isFileInPrimaryFileSystem(currentRootDirectory))
+                tabs.getTabAt(0).select();
+            else
+                tabs.getTabAt(1).select();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("currentRootDirectory", currentRootDirectory);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -67,6 +103,31 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
         super.onDestroy();
     }
 
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        bus.post(new OnDirectoryCancelEvent());
+        super.onCancel(dialog);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == floatingActionButton) {
+            floatingActionButtonClicked(v);
+        } else if (v == selectDirectoryButton) {
+            selectDirectoryButtonClicked(v);
+        }
+    }
+
+    public void onEvent(OperationFailedEvent event) {
+        Log.d("TAG", getString(R.string.operation_not_allowed));
+        Toast.makeText(getActivity(), getString(R.string.operation_not_allowed), Toast.LENGTH_SHORT).show();
+    }
+
+    public void onEvent(CurrentRootDirectoryChangedEvent event) {
+        currentRootDirectory = event.getCurrentDirectory();
+        cardView.setText(event.getCurrentDirectory().toString());
+    }
+
     private void setCurrentRootDirectory(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             currentRootDirectory = (File) savedInstanceState.getSerializable("currentRootDirectory");
@@ -78,29 +139,10 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
     private void setCurrentDirectoryFromArgumentsOrDefault() {
         File rootDirectoryFromArgument = (File) getArguments().getSerializable("rootDirectory");
         if (rootDirectoryFromArgument == null) {
-
-            currentRootDirectory = Environment.getExternalStorageDirectory();
+            currentRootDirectory = externalStorageController.getPrimaryFileSystem();
         } else {
             currentRootDirectory = rootDirectoryFromArgument;
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("currentRootDirectory", currentRootDirectory);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_directory_chooser, container, false);
-        initGui(rootView);
-        initBus();
-        intController();
-        updateDirectoryTree();
-
-        return rootView;
     }
 
     private void initGui(View rootView) {
@@ -112,6 +154,11 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
 
         floatingActionButton.setOnClickListener(this);
         selectDirectoryButton.setOnClickListener(this);
+
+        tabs = (TabLayout) rootView.findViewById(R.id.tabs);
+        tabs.addTab(tabs.newTab().setText("primary"));
+        tabs.addTab(tabs.newTab().setText("secondary"));
+        tabs.addOnTabSelectedListener(this);
     }
 
     private void initBus() {
@@ -125,33 +172,8 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
     }
 
     private void updateDirectoryTree() {
-        directoryController.onEvent(new UpdateDirectoryTreeEvent(currentRootDirectory));
-    }
-
-    public void onEvent(OperationFailedEvent event) {
-        Log.d("TAG", getString(R.string.operation_not_allowed));
-        Toast.makeText(getActivity(), getString(R.string.operation_not_allowed), Toast.LENGTH_SHORT).show();
-    }
-
-    public void onEvent(CurrentRootDirectoryChangedEvent event) {
-        currentRootDirectory = event.getCurrentDirectory();
-        cardView.setText(event.getCurrentDirectory().toString());
-    }
-
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        bus.post(new OnDirectoryCancelEvent());
-        super.onCancel(dialog);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v == floatingActionButton){
-            floatingActionButtonClicked(v);
-        }
-        else if(v == selectDirectoryButton){
-            selectDirectoryButtonClicked(v);
-        }
+        if (currentRootDirectory != null)
+            directoryController.onEvent(new UpdateDirectoryTreeEvent(currentRootDirectory));
     }
 
     private void floatingActionButtonClicked(View view) {
@@ -161,5 +183,32 @@ public class DirectoryChooserFragment extends DialogFragment implements View.OnC
     private void selectDirectoryButtonClicked(View view) {
         bus.post(new OnDirectoryChosenEvent(currentRootDirectory));
         dismiss();
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        if (tab.getPosition() == 0) {
+            Log.d("TAG", "primary");
+            if (!externalStorageController.isFileInPrimaryFileSystem(currentRootDirectory)) {
+                currentRootDirectory = externalStorageController.getPrimaryFileSystem();
+                updateDirectoryTree();
+            }
+        } else {
+            Log.d("TAG", "secondary");
+            if (!externalStorageController.isFileInSecondaryFileSystem(currentRootDirectory)) {
+                currentRootDirectory = externalStorageController.getSecondaryFileSystem();
+                updateDirectoryTree();
+            }
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

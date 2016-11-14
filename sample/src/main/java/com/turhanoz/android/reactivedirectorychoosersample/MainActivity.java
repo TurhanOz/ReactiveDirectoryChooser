@@ -1,34 +1,42 @@
 package com.turhanoz.android.reactivedirectorychoosersample;
 
+import android.Manifest;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.turhanoz.android.reactivedirectorychooser.event.OnDirectoryCancelEvent;
 import com.turhanoz.android.reactivedirectorychooser.event.OnDirectoryChosenEvent;
 import com.turhanoz.android.reactivedirectorychooser.ui.DirectoryChooserFragment;
 import com.turhanoz.android.reactivedirectorychooser.ui.OnDirectoryChooserFragmentInteraction;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class MainActivity extends ActionBarActivity implements OnDirectoryChooserFragmentInteraction {
-    @InjectView(R.id.activity_ui_host)  LinearLayout activityUiHost;
-    @InjectView(R.id.button_rdc_floating) Button selectFloatingDirectoryChooserButton;
-    @InjectView(R.id.button_rdc) Button selectDirectoryChooserButton;
-    @InjectView(R.id.fragment_host) FrameLayout fragmentHost;
-    @InjectView(R.id.info_text) TextView infoText;
+public class MainActivity extends AppCompatActivity implements OnDirectoryChooserFragmentInteraction, PermissionListener {
+    @InjectView(R.id.activity_ui_host)
+    LinearLayout activityUiHost;
+    @InjectView(R.id.button_rdc_floating)
+    Button selectFloatingDirectoryChooserButton;
+    @InjectView(R.id.button_rdc)
+    Button selectDirectoryChooserButton;
+    @InjectView(R.id.fragment_host)
+    FrameLayout fragmentHost;
+    @InjectView(R.id.info_text)
+    TextView infoText;
 
     FragmentCounter fragmentCounter;
     File currentRootDirectory;
@@ -38,18 +46,24 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-
+        initPermissions();
         initCurrentRootDirectory(savedInstanceState);
         initFragmentCounter(savedInstanceState);
         showOrHideActivityUiHost();
         updateInfoText();
     }
 
+    private void initPermissions() {
+        new TedPermission(this)
+                .setPermissionListener(this)
+                .setDeniedMessage("you can't use sample if denied")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .check();
+    }
+
     private void initCurrentRootDirectory(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             currentRootDirectory = (File) savedInstanceState.getSerializable("currentRootDirectory");
-        } else {
-            currentRootDirectory = Environment.getExternalStorageDirectory();
         }
     }
 
@@ -70,7 +84,7 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
     }
 
     private void updateInfoText() {
-        infoText.setText(currentRootDirectory.getAbsolutePath());
+        infoText.setText(currentRootDirectory == null ? "no folder selected" : currentRootDirectory.getAbsolutePath());
     }
 
     @Override
@@ -132,5 +146,15 @@ public class MainActivity extends ActionBarActivity implements OnDirectoryChoose
     @OnClick(R.id.button_rdc)
     public void selectDirectoryChooserButtonClicked(View view) {
         addDirectoryChooserFragment(null);
+    }
+
+    @Override
+    public void onPermissionGranted() {
+
+    }
+
+    @Override
+    public void onPermissionDenied(ArrayList<String> arrayList) {
+
     }
 }

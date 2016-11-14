@@ -1,19 +1,12 @@
 apply plugin: 'com.android.library'
-apply plugin: 'org.robolectric'
-apply plugin: 'maven'
-apply plugin: 'signing'
-
-group = "com.turhanoz.android"
-archivesBaseName = "reactivedirectorychooser"
-version = "0.0.13"
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 10
-        targetSdkVersion 22
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 13
         versionName "0.0.13"
     }
@@ -25,99 +18,21 @@ android {
     }
 }
 
-robolectric {
-    // Configure includes / excludes
-    include '**/*Test.class'
-
-    // Configure max heap size of the test JVM
-    maxHeapSize = '2048m'
-
-    // Configure the test JVM arguments - Does not apply to Java 8
-    jvmArgs '-XX:MaxPermSize=512m', '-XX:-UseSplitVerifier'
-
-    // Specify max number of processes (default is 1)
-    maxParallelForks = 4
-
-    // Specify max number of test classes to execute in a test process
-    // before restarting the process (default is unlimited)
-    forkEvery = 150
-
-    // configure whether failing tests should fail the build
-    ignoreFailures true
-
-    // use afterTest to listen to the test execution results
-    afterTest { descriptor, result ->
-        println "Executing test for ${descriptor.name} with result: ${result.resultType}"
-    }
-}
-
 configurations {
     archives {
         extendsFrom configurations.default
     }
 }
 
-signing {
-    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
-}
-
-def ossrhUsername = hasProperty('ossrhUsername') ? ossrhUsername : System.getenv('ossrhUsername')
-def ossrhPassword = hasProperty('ossrhPassword') ? ossrhPassword : System.getenv('ossrhPassword')
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            pom.project {
-                name 'Android Reactive Directory Chooser'
-                packaging 'aar'
-                description 'A simple android library that lets user select a directory from Storage.'
-                url 'https://github.com/TurhanOz/ReactiveDirectoryChooser'
-
-                scm {
-                    connection 'scm:git@github.com:TurhanOz/ReactiveDirectoryChooser.git'
-                    developerConnection 'scm:git@github.com:TurhanOz/ReactiveDirectoryChooser.git'
-                    url 'https://github.com/TurhanOz/ReactiveDirectoryChooser'
-                }
-
-                licenses {
-                    license {
-                        name 'THE VIRGIN-MOJITO-WARE LICENSE version 2048'
-                        url 'https://github.com/TurhanOz/ReactiveDirectoryChooser/blob/master/LICENSE'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'TurhanOz'
-                        name 'Turhan Oz'
-                        email '@turhanoz'
-                    }
-                }
-            }
-        }
-    }
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:cardview-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile 'com.netflix.rxjava:rxjava-android:0.20.7'
     compile 'de.greenrobot:eventbus:2.4.0'
     testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:2.4'
+    testCompile "org.robolectric:robolectric:3.1.4"
     testCompile "org.mockito:mockito-core:1.9.5"
 }

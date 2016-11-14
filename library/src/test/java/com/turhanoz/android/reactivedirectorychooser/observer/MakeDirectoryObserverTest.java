@@ -3,6 +3,7 @@ package com.turhanoz.android.reactivedirectorychooser.observer;
 import com.turhanoz.android.reactivedirectorychooser.event.OperationFailedEvent;
 import com.turhanoz.android.reactivedirectorychooser.event.UpdateDirectoryTreeEvent;
 import com.turhanoz.android.reactivedirectorychooser.model.DirectoryTree;
+import com.turhanoz.reactivedirectorychooser.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(constants = BuildConfig.class, sdk=21, manifest = "library/src/main/AndroidManifest.xml")
 public class MakeDirectoryObserverTest {
     MakeDirectoryObserver sut;
     EventBus mockBus;

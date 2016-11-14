@@ -1,6 +1,7 @@
 package com.turhanoz.android.reactivedirectorychooser.model;
 
 import com.turhanoz.android.reactivedirectorychooser.event.CurrentRootDirectoryChangedEvent;
+import com.turhanoz.reactivedirectorychooser.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,13 +13,12 @@ import java.io.File;
 
 import de.greenrobot.event.EventBus;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(constants = BuildConfig.class, sdk=21, manifest = "library/src/main/AndroidManifest.xml")
 public class DirectoryTreeTest{
    DirectoryTree sut;
     EventBus mockBus;

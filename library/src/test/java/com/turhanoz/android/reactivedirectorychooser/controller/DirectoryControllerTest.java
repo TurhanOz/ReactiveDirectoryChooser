@@ -9,13 +9,14 @@ import com.turhanoz.android.reactivedirectorychooser.event.UpdateDirectoryTreeEv
 import com.turhanoz.android.reactivedirectorychooser.operation.ListDirectoryOperation;
 import com.turhanoz.android.reactivedirectorychooser.operation.MakeDirectoryOperation;
 import com.turhanoz.android.reactivedirectorychooser.ui.DirectoryAdapter;
+import com.turhanoz.reactivedirectorychooser.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 
 import java.io.File;
 
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "library/src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(constants = BuildConfig.class, sdk=21)
 public class DirectoryControllerTest {
     DirectoryController sut;
     EventBus mockBus;
@@ -34,7 +35,7 @@ public class DirectoryControllerTest {
     @Before
     public void setUp() throws Exception {
         mockBus = mock(EventBus.class);
-        Context context = Robolectric.getShadowApplication().getApplicationContext();
+        Context context = ShadowApplication.getInstance().getApplicationContext();
         sut = new DirectoryController(context, mockBus, mock(RecyclerView.class));
 
         sut.makeDirectoryOperation = mock(MakeDirectoryOperation.class);
