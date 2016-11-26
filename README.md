@@ -31,7 +31,7 @@ allprojects {
         }
     }
 dependencies {
-        compile 'com.github.turhanoz:reactivedirectorychooser:1.0.1'
+        compile 'com.github.turhanoz:reactivedirectorychooser:{latest version}'
     }
 ```
 
