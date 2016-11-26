@@ -1,6 +1,6 @@
 # Android ReactiveDirectoryChooser
 [![Build Status](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser.svg?branch=master)](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser)
-[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#User/Repo)
+[![Release](https://jitpack.io/v/TurhanOz/ReactiveDirectoryChooser.svg)](https://jitpack.io/#TurhanOz/ReactiveDirectoryChooser)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveDirectoryChooser-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1699)
 [![Stories in Ready](https://badge.waffle.io/TurhanOz/ReactiveDirectoryChooser.png?label=ready&title=Ready)](https://waffle.io/TurhanOz/ReactiveDirectoryChooser)
 
