@@ -1,10 +1,10 @@
 # Android ReactiveDirectoryChooser
 [![Build Status](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser.svg?branch=master)](https://travis-ci.org/TurhanOz/ReactiveDirectoryChooser)
-[![Maven Central](https://img.shields.io/badge/maven--central-0.0.13-blue.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.turhanoz.android%22%20AND%20a%3A%22reactivedirectorychooser%22)
+[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#User/Repo)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveDirectoryChooser-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1699)
 [![Stories in Ready](https://badge.waffle.io/TurhanOz/ReactiveDirectoryChooser.png?label=ready&title=Ready)](https://waffle.io/TurhanOz/ReactiveDirectoryChooser)
 
-A simple android library that lets user select a directory.
+A simple android library that lets user select a directory, either on primary external SD Card, or Secondary one (if you have multiple external storage).
 
 This library has been developed using RxJava. It also integrates relevant unit tests.
 
@@ -17,35 +17,31 @@ This library has been developed using RxJava. It also integrates relevant unit t
 
 ## Usage
 
-### From Maven Central
+### From JitPack
 
-Library releases are available on Maven Central; you can add dependencies as follow : 
+Library releases are available on JitPack; you can add dependencies as follow :
 
 **Gradle**
 
 ```groovy
-compile ('com.turhanoz.android:reactivedirectorychooser:0.0.13@aar'){
-        transitive=true
+allprojects {
+        repositories {
+            jcenter()
+            maven { url "https://jitpack.io" }
+        }
     }
-```
-**Maven**
-
-```xml
-<dependency>
-  <groupId>com.turhanoz.android</groupId>
-  <artifactId>reactivedirectorychooser</artifactId>
-  <version>0.0.13</version>
-  <type>aar</type>
-</dependency>
+dependencies {
+        compile 'com.github.turhanoz:reactivedirectorychooser:1.0.1'
+    }
 ```
 
 ### Supported Android SDK
 
-You can use this library for apps starting from android 2.3.3 (gingerbread /API 10) to android 5.1 (lollipop / API 22)
+You can use this library for apps starting from android 2.3.3 (gingerbread /API 10) to android 7.1 (lollipop / API 25)
 
 ```
 minSdkVersion 10
-targetSdkVersion 22
+targetSdkVersion 25
 ```
 
 ### Manifest
