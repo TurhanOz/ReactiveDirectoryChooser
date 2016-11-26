@@ -100,8 +100,26 @@ Follow the detailed process of this open source project in this [blog post](http
 
 ## License
 
+**Fun one**
 ```text
 Copyright 2015 Turhan Oz
 
 "THE VIRGIN-MOJITO-WARE LICENSE" (Revision 2048): As long as you retain this notice you can do whatever you want with this stuff. If we meet some day, and you think this stuff is worth it, you can buy me a virgin mojito in return. Turhan
+```
+
+**Real one**
+```text
+    Copyright 2015 Turhan OZ
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 ```
