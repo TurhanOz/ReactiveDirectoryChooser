@@ -30,11 +30,11 @@
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/select_button"
                     android:layout_toStartOf="@id/select_button"
-                    android:ellipsize="start"
                     android:gravity="center_vertical"
                     android:minHeight="75dp"
                     android:padding="10dp"
                     android:maxLines="1"
+                    android:ellipsize="middle"
                     android:textSize="18sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
