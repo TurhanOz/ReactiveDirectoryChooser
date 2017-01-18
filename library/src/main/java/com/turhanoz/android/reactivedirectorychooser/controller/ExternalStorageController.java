@@ -1,5 +1,7 @@
 package com.turhanoz.android.reactivedirectorychooser.controller;
 
+import android.text.TextUtils;
+
 import java.io.File;
 import java.util.Locale;
 
@@ -21,8 +23,13 @@ public class ExternalStorageController {
         return System.getenv("EXTERNAL_STORAGE");
     }
 
-    public String getExternalSecondaryStoragePath() {
-        return System.getenv("SECONDARY_STORAGE");
+    public String getExternalSecondaryStoragePath()
+    {
+        String path = System.getenv("SECONDARY_STORAGE");
+        if(TextUtils.isEmpty(path)){
+            System.getenv("EXTERNAL_SDCARD_STORAGE");
+        }
+        return  path;
     }
 
     public File getPrimaryFileSystem() {
