@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 
@@ -29,8 +30,8 @@ ext {
 
     // dependencies versions
     supportLibraryVersion = '25.1.0'
-    firebaseVersion = '9.6.0'
-    playServicesVersion = '9.8.0'
+    firebaseVersion = '10.0.1'
+    playServicesVersion = '10.0.1'
 }
 
 task clean(type: Delete) {
