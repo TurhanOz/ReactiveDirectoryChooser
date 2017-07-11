@@ -44,6 +44,10 @@ minSdkVersion 10
 targetSdkVersion 25
 ```
 
+##Important behaviour
+Starting API LEVEL 21, please use ACTION_OPEN_DOCUMENT_TREE intent instead of opening raw directories
+(here is a sample to guide you : https://github.com/googlesamples/android-DirectorySelection)
+
 ### Manifest
 
 You need to add the `android.permission.WRITE_EXTERNAL_STORAGE` permission.
