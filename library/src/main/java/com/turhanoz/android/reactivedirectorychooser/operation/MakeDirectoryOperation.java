@@ -8,38 +8,39 @@ import com.turhanoz.android.reactivedirectorychooser.observer.MakeDirectoryObser
 import java.io.File;
 
 import de.greenrobot.event.EventBus;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class MakeDirectoryOperation {
-    Subscription subscription;
+    private final CompositeDisposable disposables;
     DirectoryTree dataSet;
     EventBus bus;
 
     public MakeDirectoryOperation(DirectoryTree dataSet, EventBus bus) {
         this.dataSet = dataSet;
         this.bus = bus;
+        disposables = new CompositeDisposable();
+
     }
 
     public void compute(File rootDirectory, String name) {
         cancelPreviousOperation();
 
         Observable<File> observable = new MakeDirectoryObservable().create(rootDirectory, name);
-        Observer<File> observer = new MakeDirectoryObserver(dataSet, bus);
+        DisposableObserver<File> observer = new MakeDirectoryObserver(dataSet, bus);
 
-        subscription = observable.subscribeOn(Schedulers.io())
+        disposables.add(observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                .subscribeWith(observer));
     }
 
     public void cancelPreviousOperation() {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        if (disposables.size() > 0) {
+            disposables.clear();
         }
-        subscription = null;
     }
 
 }

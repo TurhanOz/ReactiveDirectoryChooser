@@ -10,9 +10,9 @@ import com.turhanoz.android.reactivedirectorychooser.model.DirectoryTree;
 import java.io.File;
 
 import de.greenrobot.event.EventBus;
-import rx.Observer;
+import io.reactivex.observers.DisposableObserver;
 
-public class ListDirectoryObserver implements Observer<File> {
+public class ListDirectoryObserver extends DisposableObserver<File> {
     DirectoryTree dataSet;
     EventBus bus;
 
@@ -24,7 +24,7 @@ public class ListDirectoryObserver implements Observer<File> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         dataSet.directoryList.sort();
         if(dataSet.getParentDirectory() !=null) {
             dataSet.directoryList.add(0, dataSet.getParentDirectory());
@@ -38,6 +38,7 @@ public class ListDirectoryObserver implements Observer<File> {
         Log.d("TAG", "onError : " + e.toString());
         bus.post(new OperationFailedEvent());
     }
+
 
     @Override
     public void onNext(File file) {

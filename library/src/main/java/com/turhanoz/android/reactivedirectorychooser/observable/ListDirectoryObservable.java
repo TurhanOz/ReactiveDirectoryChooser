@@ -2,8 +2,10 @@ package com.turhanoz.android.reactivedirectorychooser.observable;
 
 import java.io.File;
 
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Predicate;
+
 
 public class ListDirectoryObservable extends ListFileObservable {
 
@@ -12,13 +14,14 @@ public class ListDirectoryObservable extends ListFileObservable {
                 .filter(isDirectory());
     }
 
-    private Func1<File, Boolean> isDirectory() {
-        return new Func1<File, Boolean>() {
+    private Predicate<File> isDirectory() {
+        return new Predicate<File>() {
             @Override
-            public Boolean call(File file) {
+            public boolean test(@NonNull File file) throws Exception {
                 return file.isDirectory();
             }
         };
     }
+
 
 }

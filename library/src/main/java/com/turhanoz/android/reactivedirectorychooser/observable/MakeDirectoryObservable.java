@@ -6,29 +6,31 @@ import com.turhanoz.android.reactivedirectorychooser.exception.PermissionDeniedE
 import java.io.File;
 import java.io.IOException;
 
-import rx.Observable;
-import rx.Subscriber;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
 
 
 public class MakeDirectoryObservable {
     public Observable<File> create(final File rootDirectory, final String directoryName) {
-        return Observable.create(new Observable.OnSubscribe<File>() {
+        return Observable.create(new ObservableOnSubscribe<File>() {
             @Override
-            public void call(Subscriber<? super File> subscriber) {
+            public void subscribe(@NonNull ObservableEmitter<File> e) throws Exception {
                 if (!rootDirectory.canWrite()) {
-                    subscriber.onError(new PermissionDeniedException());
+                    e.onError(new PermissionDeniedException());
                 }
                 File newDirectory = new File(rootDirectory, directoryName);
 
                 if (newDirectory.exists()) {
-                    subscriber.onError(new DirectoryExistsException());
+                    e.onError(new DirectoryExistsException());
                 } else {
                     boolean isDirectoryCreated = newDirectory.mkdir();
                     if (isDirectoryCreated) {
-                        subscriber.onNext(newDirectory);
-                        subscriber.onCompleted();
+                        e.onNext(newDirectory);
+                        e.onComplete();
                     } else {
-                        subscriber.onError(new IOException());
+                        e.onError(new IOException());
                     }
                 }
             }

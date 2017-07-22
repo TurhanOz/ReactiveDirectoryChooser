@@ -9,10 +9,10 @@ import com.turhanoz.android.reactivedirectorychooser.model.DirectoryTree;
 import java.io.File;
 
 import de.greenrobot.event.EventBus;
-import rx.Observer;
+import io.reactivex.observers.DisposableObserver;
 
 
-public class MakeDirectoryObserver implements Observer<File> {
+public class MakeDirectoryObserver extends DisposableObserver<File> {
     DirectoryTree dataSet;
     EventBus bus;
     File createdDirectory;
@@ -23,7 +23,7 @@ public class MakeDirectoryObserver implements Observer<File> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         if(isCreatedDirectoryInCurrentRootDirectory()){
             bus.post(new UpdateDirectoryTreeEvent(dataSet.getRoot()));
         }

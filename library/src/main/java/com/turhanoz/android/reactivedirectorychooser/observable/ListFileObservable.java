@@ -2,19 +2,22 @@ package com.turhanoz.android.reactivedirectorychooser.observable;
 
 import java.io.File;
 
-import rx.Observable;
-import rx.Subscriber;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
+
 
 public class ListFileObservable {
     public Observable<File> create(final File rootDirectory) {
-        return Observable.create(new Observable.OnSubscribe<File>() {
+        return Observable.create(new ObservableOnSubscribe<File>() {
             @Override
-            public void call(Subscriber<? super File> subscriber) {
+            public void subscribe(@NonNull ObservableEmitter<File> e) throws Exception {
                 File[] childDirectories = rootDirectory.listFiles();
                 for (File child : childDirectories) {
-                    subscriber.onNext(child);
+                    e.onNext(child);
                 }
-                subscriber.onCompleted();
+                e.onComplete();
             }
         });
     }

@@ -9,20 +9,22 @@ import com.turhanoz.android.reactivedirectorychooser.observer.ListDirectoryObser
 import java.io.File;
 
 import de.greenrobot.event.EventBus;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class ListDirectoryOperation {
-    Subscription subscription;
+    private final CompositeDisposable disposables;
     DirectoryTree dataSet;
     EventBus bus;
 
     public ListDirectoryOperation(DirectoryTree dataSet, EventBus bus) {
         this.dataSet = dataSet;
         this.bus = bus;
+        disposables = new CompositeDisposable();
     }
 
     public void compute(File rootDirectory) {
@@ -30,11 +32,11 @@ public class ListDirectoryOperation {
             cancelPreviousOperation();
             updateDataSet(rootDirectory);
             Observable<File> observable = new ListDirectoryObservable().create(rootDirectory);
-            Observer<File> observer = new ListDirectoryObserver(dataSet, bus);
+            DisposableObserver<File> observer = new ListDirectoryObserver(dataSet, bus);
 
-            subscription = observable.subscribeOn(Schedulers.io())
+            disposables.add(observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(observer);
+                    .subscribeWith(observer));
         } else {
             bus.post(new OperationFailedEvent());
         }
@@ -43,10 +45,9 @@ public class ListDirectoryOperation {
     }
 
     public void cancelPreviousOperation() {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        if (disposables.size() > 0) {
+            disposables.clear();
         }
-        subscription = null;
     }
 
     private void updateDataSet(File rootDirectory) {
