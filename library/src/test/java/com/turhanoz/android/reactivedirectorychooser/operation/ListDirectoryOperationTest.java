@@ -4,6 +4,8 @@ import com.turhanoz.android.reactivedirectorychooser.model.CustomFile;
 import com.turhanoz.android.reactivedirectorychooser.model.DirectoryTree;
 import com.turhanoz.reactivedirectorychooser.BuildConfig;
 
+import junit.framework.Assert;
+
 import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,12 +16,10 @@ import org.robolectric.annotation.Config;
 import java.io.File;
 
 import de.greenrobot.event.EventBus;
-import rx.Subscription;
+import io.reactivex.disposables.CompositeDisposable;
 
 import static junit.framework.Assert.assertNull;
-import static junit.framework.TestCase.assertSame;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -40,27 +40,23 @@ public class ListDirectoryOperationTest {
     }
 
     @Test
-    public void shouldCreateNewSubscriptionWhenRootDirectoryCouldBeRead() throws Exception {
-        Subscription mockSubscription = mock(Subscription.class);
-        sut.subscription = mockSubscription;
+    public void shouldCreateNewDisposableWhenRootDirectoryCouldBeRead() throws Exception {
         File stubRootFile = mock(File.class);
         when(stubRootFile.canRead()).thenReturn(true);
 
         sut.compute(stubRootFile);
 
-        assertNotSame(mockSubscription, sut.subscription);
+        Assert.assertEquals(1, sut.disposables.size());
     }
 
     @Test
-    public void shouldNotCreateNewSubscriptionWhenRootDirectoryCouldNotBeRead() throws Exception {
-        Subscription mockSubscription = mock(Subscription.class);
-        sut.subscription = mockSubscription;
+    public void shouldNotCreateAddNewDisposableWhenRootDirectoryCouldNotBeRead() throws Exception {
         File stubRootFile = mock(File.class);
         when(stubRootFile.canRead()).thenReturn(false);
 
         sut.compute(stubRootFile);
 
-        assertSame(mockSubscription, sut.subscription);
+        Assert.assertEquals(0, sut.disposables.size());
     }
 
     @Test

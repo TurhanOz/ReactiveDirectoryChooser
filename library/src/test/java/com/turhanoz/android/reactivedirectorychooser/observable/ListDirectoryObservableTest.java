@@ -10,9 +10,9 @@ import org.robolectric.annotation.Config;
 
 import java.io.File;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -43,7 +43,7 @@ public class ListDirectoryObservableTest {
         when(stubRootDirectory.listFiles()).thenReturn(childrenContent);
 
         sut.create(stubRootDirectory)
-                .subscribeOn(Schedulers.immediate())
+                .subscribeOn(Schedulers.trampoline())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mockObserver);
 
@@ -51,7 +51,7 @@ public class ListDirectoryObservableTest {
         verify(mockObserver).onNext(childDirectory2);
         verify(mockObserver, times(2)).onNext(any(File.class));
         verify(mockObserver, never()).onNext(childFile1);
-        verify(mockObserver).onCompleted();
+        verify(mockObserver).onComplete();
     }
 
     private File createStubDirectory(){

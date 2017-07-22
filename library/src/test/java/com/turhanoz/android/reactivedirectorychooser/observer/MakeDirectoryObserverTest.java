@@ -54,7 +54,7 @@ public class MakeDirectoryObserverTest {
         directoryTree.setRootDirectoryAndNotify(stubRootDirectory);
 
         sut.onNext(stubCreatedDirectory);
-        sut.onCompleted();
+        sut.onComplete();
 
         verify(mockBus).post(eq(expectedEvent));
     }
@@ -71,7 +71,7 @@ public class MakeDirectoryObserverTest {
         directoryTree.setRootDirectoryAndNotify(stubRootDirectory);
 
         sut.onNext(stubCreatedDirectory);
-        sut.onCompleted();
+        sut.onComplete();
 
         verify(mockBus, never()).post(eq(UpdateDirectoryTreeEvent.class));
     }

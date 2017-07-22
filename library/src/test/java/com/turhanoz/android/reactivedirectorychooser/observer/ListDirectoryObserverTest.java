@@ -74,7 +74,7 @@ public class ListDirectoryObserverTest {
         DirectoryList spyDirectoryList = spy(new DirectoryList());
         directoryTree.directoryList = spyDirectoryList;
 
-        sut.onCompleted();
+        sut.onComplete();
 
         verify(directoryTree.directoryList).sort();
     }
@@ -84,7 +84,7 @@ public class ListDirectoryObserverTest {
         File mockParentFile = mock(File.class);
         directoryTree.setParentDirectory(mockParentFile);
 
-        sut.onCompleted();
+        sut.onComplete();
 
         assertThat(directoryTree.directoryList.get(0), is(mockParentFile));
     }
@@ -93,14 +93,14 @@ public class ListDirectoryObserverTest {
     public void onCompleteShouldNotAddMissingParent() throws Exception {
         directoryTree.setParentDirectory(null);
 
-        sut.onCompleted();
+        sut.onComplete();
 
         assertTrue(directoryTree.directoryList.isEmpty());
     }
 
     @Test
     public void onCompleteShouldNotifyDataSetChanged() throws Exception {
-        sut.onCompleted();
+        sut.onComplete();
 
         verify(mockBus).post(any(DataSetChangedEvent.class));
     }

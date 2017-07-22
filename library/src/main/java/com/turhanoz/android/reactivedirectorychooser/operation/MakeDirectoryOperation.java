@@ -15,7 +15,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MakeDirectoryOperation {
-    private final CompositeDisposable disposables;
+    final CompositeDisposable disposables;
     DirectoryTree dataSet;
     EventBus bus;
 

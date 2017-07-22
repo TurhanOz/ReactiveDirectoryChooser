@@ -12,8 +12,9 @@ import org.robolectric.annotation.Config;
 import java.io.File;
 
 import de.greenrobot.event.EventBus;
-import rx.Subscription;
+import io.reactivex.disposables.CompositeDisposable;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.mockito.Mockito.mock;
 
@@ -33,12 +34,9 @@ public class MakeDirectoryOperationTest {
     }
 
     @Test
-    public void shouldCreateNewSubscription() throws Exception {
-        Subscription mockSubscription = mock(Subscription.class);
-        sut.subscription = mockSubscription;
-
+    public void shouldCreateNewDisposable() throws Exception {
         sut.compute(mock(File.class), "");
 
-        assertNotSame(mockSubscription, sut.subscription);
+        assertEquals(1, sut.disposables.size());
     }
 }

@@ -14,9 +14,9 @@ import org.robolectric.shadows.ShadowEnvironment;
 
 import java.io.File;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -43,12 +43,12 @@ public class MakeDirectoryObservableTest {
         when(stubRootDirectory.canWrite()).thenReturn(false);
 
         sut.create(stubRootDirectory, "fileName")
-                .subscribeOn(Schedulers.immediate())
+                .subscribeOn(Schedulers.trampoline())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mockObserver);
 
         verify(mockObserver).onError(any(PermissionDeniedException.class));
-        verify(mockObserver, never()).onCompleted();
+        verify(mockObserver, never()).onComplete();
     }
 
     @Test
@@ -58,12 +58,12 @@ public class MakeDirectoryObservableTest {
         createDirectory(rootDirectory, folderName);
 
         sut.create(rootDirectory, folderName)
-                .subscribeOn(Schedulers.immediate())
+                .subscribeOn(Schedulers.trampoline())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mockObserver);
 
         verify(mockObserver).onError(any(DirectoryExistsException.class));
-        verify(mockObserver, never()).onCompleted();
+        verify(mockObserver, never()).onComplete();
     }
 
     private void createDirectory(File rootDirectory, String folderName) {
@@ -77,13 +77,13 @@ public class MakeDirectoryObservableTest {
         String folderName = "folderName";
 
         sut.create(rootDirectory, folderName)
-                .subscribeOn(Schedulers.immediate())
+                .subscribeOn(Schedulers.trampoline())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mockObserver);
 
         ArgumentCaptor<File> argumentCaptor = ArgumentCaptor.forClass(File.class);
         verify(mockObserver).onNext(argumentCaptor.capture());
-        verify(mockObserver).onCompleted();
+        verify(mockObserver).onComplete();
         assertEquals(rootDirectory.toString() + File.separator + folderName, argumentCaptor.getValue().getAbsolutePath());
     }
 }

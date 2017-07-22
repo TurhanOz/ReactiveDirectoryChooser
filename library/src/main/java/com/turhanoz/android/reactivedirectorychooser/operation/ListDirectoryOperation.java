@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class ListDirectoryOperation {
-    private final CompositeDisposable disposables;
+    final CompositeDisposable disposables;
     DirectoryTree dataSet;
     EventBus bus;
 
