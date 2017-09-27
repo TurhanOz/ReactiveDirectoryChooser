@@ -37,11 +37,11 @@ dependencies {
 
 ### Supported Android SDK
 
-You can use this library for apps starting from android 2.3.3 (gingerbread /API 10) to android 7.1 (lollipop / API 25)
+You can use this library for apps starting from android 4.0 (icecream /API 14) to android 8 (oreo / API 26)
 
 ```
-minSdkVersion 10
-targetSdkVersion 25
+minSdkVersion 14
+targetSdkVersion 26
 ```
 
 ##Important behaviour
